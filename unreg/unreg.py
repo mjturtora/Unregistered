@@ -58,22 +58,24 @@ def get_address(building_sheetname):
 
 
 def get_diff(build_tuple):
-    """Where the magic happens. Calls helper functions to get set difference for apartments in building_name.
+    """Where the magic happens. Calls helper functions to get data needed
+     for set difference of units in building by name.
     Prints diagnostics. Probably doing too much."""
     # todo: split out print statements
     apartments = get_building(build_tuple)
     address = get_address(build_tuple[1])
-    print(f'Number of ADDRESSES in {build_tuple[0]} = {len(address)}')
     registered_units = eval('parse_' + build_tuple[0] + '(address)')
     # todo: need to test type before key=int sort
     unregistered_units = sorted(apartments - registered_units, key=int)
+    output(build_tuple, unregistered_units)
+
     print('worksheet_name:', build_tuple[1])
+    print(f'Number of ADDRESSES in {build_tuple[0]} = {len(address)}')
     print('All Apartments: ', sorted(apartments, key=int))
     print('registered_units: ', sorted(registered_units, key=int))
     print('unregistered_units: ', sorted(unregistered_units, key=int))
     print('\n****************************')
-    output(build_tuple, unregistered_units)
-    return  #unregistered_units
+    return
 
 
 def output(build_tuple, unregistered_units):
@@ -84,13 +86,8 @@ def output(build_tuple, unregistered_units):
 
 if __name__ == "__main__":
 
-    #path = r'D:\Stuff\Projects\Pol\Unregistered\Output\Unregistered Units.xlsx'
     path = r'..\io\Output\Unregistered Units.xlsx'
     writer = pd.ExcelWriter(path, engine='xlsxwriter')
-    # df3.to_excel(writer, sheet_name = 'x3')
-    # df4.to_excel(writer, sheet_name = 'x4')
-    # writer.save()
-    # writer.close()
     # buildings = [('bayfront', 'Bayfront Tower'), ('beacon430', 'Beacon 430'), ('beacononthird', 'BeaconOn3rd_sheet'),
     #              ('bliss', 'Bliss'), ('camden', 'Camden Pier Dist'), ('cloisters', 'Cloisters'),
     #              ('cottonwood', 'Cottonwood Bayview'), ('florencia', 'Florencia'),
@@ -102,7 +99,6 @@ if __name__ == "__main__":
     buildings = [('camden', 'Camden Pier Dist'), ('presbyterian', 'Presbyterian Towers')]
     for build_tuple in buildings:
         unregistered_units = get_diff(build_tuple)
-    #     output(build_tuple, unregistered_units)
 
     writer.save()
     writer.close()
