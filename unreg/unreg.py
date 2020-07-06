@@ -72,7 +72,7 @@ def get_diff(build_tuple):
     print('worksheet_name:', build_tuple[1])
     print(f'Number of ADDRESSES in {build_tuple[0]} = {len(address)}')
     print('All Apartments: ', sorted(apartments, key=int))
-    print('registered_units: ', sorted(registered_units, key=int))
+    print('registered_units: ', sorted(registered_units, key=int))       #will prob need to remove key=int to account for apts with letters in them
     print('unregistered_units: ', sorted(unregistered_units, key=int))
     print('\n****************************')
     return
@@ -108,8 +108,7 @@ if __name__ == "__main__":
     # ('WinstonPark', 'WinstonParklist20200612-6816659306')
     # #buildings = [('bayfront', 'Bayfront Tower')]
     buildings = [
-        ('bayfront', 'Bayfront Tower', '1', ['Unit', 'Ste', '#']),
-        ('beacon430', 'Beacon 430', '430', ['Apt'])
+        ('bayfront', 'Bayfront Tower', '1', ['Unit', 'Ste', '#'])
     ]
     for build_tuple in buildings:
         unregistered_units = get_diff(build_tuple)
