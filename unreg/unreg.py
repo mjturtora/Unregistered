@@ -64,7 +64,7 @@ def get_diff(build_tuple):
     # todo: split out print statements
     apartments = get_building(build_tuple)
     address = get_address(build_tuple[1])
-    registered_units = eval('parse_' + build_tuple[0] + '(address)')
+    registered_units = parse_addresses(address, build_tuple[2], build_tuple[3])
     # todo: need to test type before key=int sort
     unregistered_units = sorted(apartments - registered_units, key=int)
     output(build_tuple, unregistered_units)
@@ -88,15 +88,29 @@ if __name__ == "__main__":
 
     path = r'..\io\Output\Unregistered Units.xlsx'
     writer = pd.ExcelWriter(path, engine='xlsxwriter')
-    # buildings = [('bayfront', 'Bayfront Tower'), ('beacon430', 'Beacon 430'), ('beacononthird', 'BeaconOn3rd_sheet'),
-    #              ('bliss', 'Bliss'), ('camden', 'Camden Pier Dist'), ('cloisters', 'Cloisters'),
-    #              ('cottonwood', 'Cottonwood Bayview'), ('florencia', 'Florencia'),
-    #              ('huntington', 'Huntington'), ('presbyterian', 'Presbyterian Towers'),
-    #              ('rowlandplace', 'Rowland Place'), ('sage', 'Sage_sheetname')]
+    # new format for tuples: (function name, sheet name, street number, unit string list)
+    # removes need for multiple parse functions
+    # buildings = [
+    #               ('bayfront', 'Bayfront Tower', '1', ['Unit', 'Ste', '#']),
+    #               ('beacon430', 'Beacon 430', '430', ['Apt']),
+    #               ('beacononthird', 'BeaconOn3rd_sheet'),                <-- didn't see sheet for this one
+    #               ('bliss', 'Bliss', '176', ['Unit']),
+    #               ('camden', 'Camden Pier Dist', '330', ['Unit']),
+    #               ('cloisters', 'Cloisters', '288', ['Apt', 'Ph', '#']),  <-- funky one
+    #               ('cottonwood', 'Cottonwood Bayview', '235', ['Unit']),
+    #               ('florencia', 'Florencia', '100', ['Unit']),
+    #               ('huntington', 'Huntington', '350', ['Apt']),
+    #               ('presbyterian', 'Presbyterian Towers', '430', ['Apt']),
+    #               ('rowlandplace', 'Rowland Place', '146', ['Unit']),
+    #               ('sage', 'Sage_sheetname')                             <-- also didn't see sheet for this one
+    #            ]
     #
     # ('WinstonPark', 'WinstonParklist20200612-6816659306')
     # #buildings = [('bayfront', 'Bayfront Tower')]
-    buildings = [('camden', 'Camden Pier Dist'), ('presbyterian', 'Presbyterian Towers')]
+    buildings = [
+        ('bayfront', 'Bayfront Tower', '1', ['Unit', 'Ste', '#']),
+        ('beacon430', 'Beacon 430', '430', ['Apt'])
+    ]
     for build_tuple in buildings:
         unregistered_units = get_diff(build_tuple)
 

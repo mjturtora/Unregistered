@@ -29,15 +29,3 @@ def parse_addresses(address, street_number, unit_string):
 # Maybe don't need functions for each one anymore...
 # could just loop through a list (of tuples?) with NAME, Street_Number, and Unit_string
 
-def parse_camden(address):
-    """Controls parsing for Camden"""
-    street_number = '330'
-    unit_string = ['Unit']
-    return parse_addresses(address, street_number, unit_string)
-
-
-def parse_presbyterian(address):
-    """Controls parsing for Presbyterian"""
-    street_number = '430'
-    unit_string = ['Apt']
-    return parse_addresses(address, street_number, unit_string)
