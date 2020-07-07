@@ -81,8 +81,11 @@ def get_diff(build_tuple):
     #Doesn't sort if an exception is thrown
     try:
         print('All Apartments: ', sorted(apartments, key=int))
+        # print(len(apartments))
         print('registered_units: ', sorted(registered_units, key=int))
+        # print(len(registered_units))
         print('unregistered_units: ', sorted(unregistered_units, key=int))
+        # print(len(unregistered_units))
     except ValueError:
         print('All Apartments: ', apartments)
         print('registered_units: ', registered_units)
@@ -115,13 +118,15 @@ if __name__ == "__main__":
     #               ('huntington', 'Huntington', '350', ['Apt']),
     #               ('presbyterian', 'Presbyterian Towers', '430', ['Apt']),
     #               ('rowlandplace', 'Rowland Place', '146', ['Unit']),
-    #               ('sage', 'Sage_sheetname')                             <-- also didn't see sheet for this one
+    #               ('sage', 'Sage_sheetname'),                             <-- also didn't see sheet for this one
+    #               ('salvador', 'Salvador', '199', ['Unit', '#']),
+    #               ('signature', 'Signature', '175', ['Apt'])
     #            ]
     #
     # ('WinstonPark', 'WinstonParklist20200612-6816659306')
     # #buildings = [('bayfront', 'Bayfront Tower')]
     buildings = [
-        ('cloisters', 'Cloisters', '288', ['Apt', 'Ph', '#'])
+        ('signature', 'Signature', '175', ['Apt'])
     ]
     for build_tuple in buildings:
         unregistered_units = get_diff(build_tuple)
