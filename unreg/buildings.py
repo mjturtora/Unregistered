@@ -8,6 +8,14 @@ def block(floor_min=1, floor_max=1, unit_min=1, unit_max=1):
                             for u in range(unit_min, unit_max+1)])
     return units
 
+def fourHundredBeach():
+    #Unit numbers in excel file
+    fname = r"..\io\input\Unit Numbers at 400 Beach Drive 5-15-20.xlsx"
+    print('Reading data file: "{}"'.format(fname))
+    df = pd.read_excel(fname, sheet_name='Sheet1', converters={'400 Beach Condo Unit Numbers': str})
+    df['400 Beach Condo Unit Numbers'].str.strip
+    apartments = set(df['400 Beach Condo Unit Numbers'])
+    return apartments
 
 def bayfront():
     # floors 8 -27

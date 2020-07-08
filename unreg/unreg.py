@@ -107,6 +107,7 @@ if __name__ == "__main__":
     # new format for tuples: (function name, sheet name, street number, unit string list)
     # removes need for multiple parse functions
     # buildings = [
+    #               ('fourHundredBeach', '400 Beach', '400', ['Unit']),
     #               ('bayfront', 'Bayfront Tower', '1', ['Unit', 'Ste', '#']),
     #               ('beacon430', 'Beacon 430', '430', ['Apt']),
     #               ('beacononthird', 'BeaconOn3rd_sheet'),                <-- didn't see sheet for this one
@@ -126,7 +127,7 @@ if __name__ == "__main__":
     # ('WinstonPark', 'WinstonParklist20200612-6816659306')
     # #buildings = [('bayfront', 'Bayfront Tower')]
     buildings = [
-        ('signature', 'Signature', '175', ['Apt'])
+        ('fourHundredBeach', '400 Beach', '400', ['Unit'])
     ]
     for build_tuple in buildings:
         unregistered_units = get_diff(build_tuple)
