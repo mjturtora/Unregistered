@@ -118,6 +118,15 @@ def florencia():
     apartments = apartments | fblock
     return apartments
 
+def harboursedge():
+    #420 4th St S
+    complete_set = set()
+    complete_set |= block(floor_min=2, floor_max=5, unit_min=40, unit_max=43)
+    complete_set |= block(floor_min=2, floor_max=5, unit_min=8, unit_max=19)
+    complete_set |= block(floor_min=4, floor_max=5, unit_min=1, unit_max=7)
+    complete_set |= {'202', '204', '206', '301', '302', '304', '306', '307'}
+    return complete_set
+
 def hermitage():
     #151 7th Street S
     #Floors 1-8, 202-260 excluding 215, 216, 235, 237
