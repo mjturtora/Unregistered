@@ -118,7 +118,7 @@ def florencia():
     apartments = apartments | fblock
     return apartments
 
-def harboursedge():
+def harborsedge():
     #420 4th St S
     complete_set = set()
     complete_set |= block(floor_min=2, floor_max=5, unit_min=40, unit_max=43)
@@ -189,6 +189,14 @@ def signature():
     df['Unit'].str.strip
     apartments = set(df['Unit'].str.replace('#', ''))
     return apartments
+
+def urbanlandings():
+    #300 4th Ave S
+    complete_set = set()
+    for i in range(2,6):
+        for j in range(20,40,2):
+            complete_set = complete_set + {str(i) + str(j)}
+    return complete_set
 
 def winstonPark():
     #5095 Bay St NE
