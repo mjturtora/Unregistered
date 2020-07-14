@@ -118,6 +118,17 @@ def florencia():
     apartments = apartments | fblock
     return apartments
 
+def hermitage():
+    #151 7th Street S
+    #Floors 1-8, 202-260 excluding 215, 216, 235, 237
+    #Not sure if this applies to each floor ? Gonna assume it does
+    complete_set = block(floor_min=1, floor_max=8, unit_min=2, unit_max=60)
+    empty_set = set()
+    for i in range(1,9):
+        empty_set |= {str(i) + '15', str(i) + '16', str(i) + '35', str(i) + '37'}
+
+    complete_set = complete_set - empty_set
+    return complete_set
 
 def huntington():
     # 350 2nd Street North
@@ -169,4 +180,10 @@ def signature():
     df['Unit'].str.strip
     apartments = set(df['Unit'].str.replace('#', ''))
     return apartments
+
+def winstonPark():
+    #5095 Bay St NE
+    #3 floors, 101-135
+    complete_set = block(floor_min=1, floor_max=3, unit_min=1, unit_max=35)
+    return complete_set
 
