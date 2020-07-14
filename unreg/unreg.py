@@ -38,7 +38,10 @@ print(f"The current working directory is {path}")
 def get_building(build_tuple):
     """Wrapper to call each building structure. Returns list of valid unit numbers"""
     building = eval(build_tuple[0] + '()')
-    print(f'building {build_tuple[0]} =  {sorted(building, key=int)}')
+    try:
+        print(f'building {build_tuple[0]} =  {sorted(building, key=int)}')
+    except ValueError:
+        print(f'building {build_tuple[0]} =  {building}')
     print(f'Number of apartments in {build_tuple[0]} =  {len(building)}')
     return building
 
@@ -64,16 +67,29 @@ def get_diff(build_tuple):
     # todo: split out print statements
     apartments = get_building(build_tuple)
     address = get_address(build_tuple[1])
-    registered_units = eval('parse_' + build_tuple[0] + '(address)')
+    registered_units = parse_addresses(address, build_tuple[2], build_tuple[3])
     # todo: need to test type before key=int sort
-    unregistered_units = sorted(apartments - registered_units, key=int)
+    try:
+        unregistered_units = sorted(apartments - registered_units, key=int)
+    except ValueError:
+        unregistered_units = apartments - registered_units
     output(build_tuple, unregistered_units)
 
     print('worksheet_name:', build_tuple[1])
     print(f'Number of ADDRESSES in {build_tuple[0]} = {len(address)}')
-    print('All Apartments: ', sorted(apartments, key=int))
-    print('registered_units: ', sorted(registered_units, key=int))
-    print('unregistered_units: ', sorted(unregistered_units, key=int))
+    #try catch to account for apartments with alpha characters
+    #Doesn't sort if an exception is thrown
+    try:
+        print('All Apartments: ', sorted(apartments, key=int))
+        # print(len(apartments))
+        print('registered_units: ', sorted(registered_units, key=int))
+        # print(len(registered_units))
+        print('unregistered_units: ', sorted(unregistered_units, key=int))
+        # print(len(unregistered_units))
+    except ValueError:
+        print('All Apartments: ', apartments)
+        print('registered_units: ', registered_units)
+        print('unregistered_units: ', unregistered_units)
     print('\n****************************')
     return
 
@@ -88,15 +104,31 @@ if __name__ == "__main__":
 
     path = r'..\io\Output\Unregistered Units.xlsx'
     writer = pd.ExcelWriter(path, engine='xlsxwriter')
-    # buildings = [('bayfront', 'Bayfront Tower'), ('beacon430', 'Beacon 430'), ('beacononthird', 'BeaconOn3rd_sheet'),
-    #              ('bliss', 'Bliss'), ('camden', 'Camden Pier Dist'), ('cloisters', 'Cloisters'),
-    #              ('cottonwood', 'Cottonwood Bayview'), ('florencia', 'Florencia'),
-    #              ('huntington', 'Huntington'), ('presbyterian', 'Presbyterian Towers'),
-    #              ('rowlandplace', 'Rowland Place'), ('sage', 'Sage_sheetname')]
+    # new format for tuples: (function name, sheet name, street number, unit string list)
+    # removes need for multiple parse functions
+    # buildings = [
+    #               ('fourHundredBeach', '400 Beach', '400', ['Unit']),
+    #               ('bayfront', 'Bayfront Tower', '1', ['Unit', 'Ste', '#']),
+    #               ('beacon430', 'Beacon 430', '430', ['Apt']),
+    #               ('beacononthird', 'BeaconOn3rd_sheet'),                <-- didn't see sheet for this one
+    #               ('bliss', 'Bliss', '176', ['Unit']),
+    #               ('camden', 'Camden Pier Dist', '330', ['Unit']),
+    #               ('cloisters', 'Cloisters', '288', ['Apt', 'Ph', '#']),  <-- funky one
+    #               ('cottonwood', 'Cottonwood Bayview', '235', ['Unit']),
+    #               ('florencia', 'Florencia', '100', ['Unit']),
+    #               ('huntington', 'Huntington', '350', ['Apt']),
+    #               ('presbyterian', 'Presbyterian Towers', '430', ['Apt']),
+    #               ('rowlandplace', 'Rowland Place', '146', ['Unit']),
+    #               ('sage', 'Sage_sheetname'),                             <-- also didn't see sheet for this one
+    #               ('salvador', 'Salvador', '199', ['Unit', '#']),
+    #               ('signature', 'Signature', '175', ['Apt'])
+    #            ]
     #
     # ('WinstonPark', 'WinstonParklist20200612-6816659306')
     # #buildings = [('bayfront', 'Bayfront Tower')]
-    buildings = [('camden', 'Camden Pier Dist'), ('presbyterian', 'Presbyterian Towers')]
+    buildings = [
+        ('fourHundredBeach', '400 Beach', '400', ['Unit'])
+    ]
     for build_tuple in buildings:
         unregistered_units = get_diff(build_tuple)
 

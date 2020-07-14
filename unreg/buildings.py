@@ -1,4 +1,5 @@
 # Module to generate list of all unit numbers in each building
+import pandas as pd
 
 def block(floor_min=1, floor_max=1, unit_min=1, unit_max=1):
     # Creates blocks of unit numbers
@@ -7,6 +8,14 @@ def block(floor_min=1, floor_max=1, unit_min=1, unit_max=1):
                             for u in range(unit_min, unit_max+1)])
     return units
 
+def fourHundredBeach():
+    #Unit numbers in excel file
+    fname = r"..\io\input\Unit Numbers at 400 Beach Drive 5-15-20.xlsx"
+    print('Reading data file: "{}"'.format(fname))
+    df = pd.read_excel(fname, sheet_name='Sheet1', converters={'400 Beach Condo Unit Numbers': str})
+    df['400 Beach Condo Unit Numbers'].str.strip
+    apartments = set(df['400 Beach Condo Unit Numbers'])
+    return apartments
 
 def bayfront():
     # floors 8 -27
@@ -138,5 +147,26 @@ def sage():
     s = "109, 110, 209, 210, 310, 409, 410, 510"
     empty_set = set(s.replace('\n', '').replace(' ', '').split(','))
     apartments = complete_set - empty_set
+    return apartments
+
+def salvador():
+    #199 Dali Blvd
+    #Unit and # for PH
+    # Floors 3-12 + PH
+    # 1-6 for 3rd floor, 1-7 for 4-12, 1-5 PH
+    complete_set = {'PH1', 'PH2', 'PH3', 'PH4', 'PH5'}
+    complete_set |= block(floor_min=3, floor_max=12, unit_min=1, unit_max=7)
+    complete_set -= {'307'}
+    return complete_set
+
+def signature():
+    #175 1st St S
+    #Apt
+    #Saved in Excel File "Signature Unit Numbers" with sheetname "Signature"
+    fname = r"..\io\input\Signature Unit Numbers.xlsx"
+    print('Reading data file: "{}"'.format(fname))
+    df = pd.read_excel(fname, sheet_name='Signature')
+    df['Unit'].str.strip
+    apartments = set(df['Unit'].str.replace('#', ''))
     return apartments
 
