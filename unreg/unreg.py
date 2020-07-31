@@ -99,6 +99,16 @@ def output(build_tuple, unregistered_units):
     df = pd.DataFrame.from_dict({build_tuple[0]: unregistered_units})
     df.to_excel(writer, sheet_name=build_tuple[0])
 
+def get_tuples():
+    #Read data from excel file into tuples
+    fname = r"..\io\input\Buildings to Run.xlsx"
+    df = pd.read_excel(fname, sheet_name="Sheet1")
+    building_tuples = []
+    for i in range(df['Sheet Name'].size):
+        if (df['Run'][i] == "Y"):
+            unit_strings = df['Unit Strings'][i].split(',')
+            new_tuple = (df['Function Name'][i], df['Sheet Name'][i], df['Street Number'][i].str, unit_strings)
+
 
 if __name__ == "__main__":
 
