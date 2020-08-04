@@ -49,7 +49,7 @@ def get_building(build_tuple):
 def get_address(building_sheetname):
     """Read raw data and return all addresses as dataframe. Bad separation of concerns"""
     #todo: split into separate read and clean functions
-    fname = r"..\io\input\Primary Building Captain contact information and VBM target postcard number 1 May 2020.xlsx"
+    fname = r"..\io\input\All Registered Voters in Buildings for Geoff.xlsx"
     #fname = r"D:\Stuff\Projects\Pol\Unregistered\data\WinstonParklist20200612-6816659306"
     print('Reading data file: "{}"'.format(fname))
     print(f'building_sheetname: {building_sheetname}')
@@ -97,7 +97,7 @@ def get_diff(build_tuple):
 def output(build_tuple, unregistered_units):
     """export to excel worksheet in already opened workbook"""
     df = pd.DataFrame.from_dict({build_tuple[0]: unregistered_units})
-    df.to_excel(writer, sheet_name=build_tuple[0])
+    df.to_excel(writer, sheet_name=build_tuple[1])
 
 def get_tuples():
     #Read data from excel file into tuples
@@ -118,13 +118,14 @@ if __name__ == "__main__":
     # removes need for multiple parse functions
     # buildings = [
     #               ('fourHundredBeach', '400 Beach', '400', ['Unit']),
+    #               ('avanti', 'Avanti', '201', ['Unit']),
     #               ('bayfront', 'Bayfront Tower', '1', ['Unit', 'Ste', '#']),
     #               ('beacon430', 'Beacon 430', '430', ['Apt']),
     #               ('beacononthird', 'BeaconOn3rd_sheet'),                <-- didn't see sheet for this one
     #               ('bliss', 'Bliss', '176', ['Unit']),
-    #               ('camden', 'Camden Pier Dist', '330', ['Unit']),
+    #               ('camden', 'Camden Pier', '330', ['Unit']),
     #               ('cloisters', 'Cloisters', '288', ['Apt', 'Ph', '#']),  <-- funky one
-    #               ('cottonwood', 'Cottonwood Bayview', '235', ['Unit']),
+    #               ('cottonwood', 'Cottonwood', '235', ['Unit']),
     #               ('florencia', 'Florencia', '100', ['Unit']),
     #               ('harborsedge', 'Harbors Edge', '420', ['Unit']),
     #               ('hermitage', 'Hermitage', '151', ['Unit']),  <-- Also missing sheet, Harbor's Edge exists twice
@@ -141,7 +142,10 @@ if __name__ == "__main__":
     # ('WinstonPark', 'WinstonParklist20200612-6816659306')
     # #buildings = [('bayfront', 'Bayfront Tower')]
     buildings = [
-        ('fourHundredBeach', '400 Beach', '400', ['Unit'])
+        ('avanti', 'Avanti', '201', ['Unit']),
+        ('camden', 'Camden Pier', '330', ['Unit']),
+        ('cottonwood', 'Cottonwood', '235', ['Unit']),
+        ('hermitage', 'Hermitage', '151', ['Unit'])
     ]
     for build_tuple in buildings:
         unregistered_units = get_diff(build_tuple)

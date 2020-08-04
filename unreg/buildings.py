@@ -17,6 +17,15 @@ def fourHundredBeach():
     apartments = set(df['400 Beach Condo Unit Numbers'])
     return apartments
 
+def avanti():
+    # Floors 1-9
+    # 101 - 107. Floors 2-8 0-42, 900-937
+    complete_set = set()
+    complete_set |= block(2, 8, 0, 42)
+    complete_set |= block(9, 9, 0, 37)
+    complete_set |= {'101', '102', '103', '104', '105', '106', '107'}
+    return complete_set
+
 def bayfront():
     # floors 8 -27
     # units 01-14 w/o 13
